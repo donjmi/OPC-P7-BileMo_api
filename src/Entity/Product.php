@@ -2,14 +2,27 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProductRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"product_read", "product_details_read"}},
+ *     denormalizationContext={"groups"={"product_write"}},
+ *     collectionOperations={
+ *          "get"={},
+ *       },
+ *      itemOperations={
+ *          "get"={}
+ *      }    
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"brand": "partial"})
  */
 class Product
 {
@@ -17,6 +30,7 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read"}) 
      */
     private $id;
 
@@ -24,6 +38,7 @@ class Product
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide")
      * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de {{ limit }} caractères")
+     * @Groups({"product_read", "product_details_read"}) 
      */
     private $brand;
 
@@ -31,11 +46,13 @@ class Product
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Le champ ne doit pas être vide")
      * @Assert\Length(min="5", minMessage="Ce champ doit contenir un minimum de {{ limit }} caractères")
+     * @Groups({"product_read", "product_details_read"}) 
      */
     private $description;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"product_read", "product_details_read"}) 
      */
     private $price;
 
