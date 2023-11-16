@@ -59,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user_write"})
+     * @Groups({"user_write", "user_details_read"})
      */
     private $password;
 
@@ -68,6 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user_details_read", "user_write"})
      */
     private $client;
+    
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
 
     public function getId(): ?int
     {

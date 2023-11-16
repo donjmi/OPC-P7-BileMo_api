@@ -53,6 +53,7 @@ class Client
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="client")
      * @Groups({"client_read"})
+     * @ApiSubresource
      */
     private $users;
 
