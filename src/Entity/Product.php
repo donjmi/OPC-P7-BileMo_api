@@ -17,6 +17,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     denormalizationContext={"groups"={"product_write"}},
  *     collectionOperations={
  *          "get"={},
+ *          "post"={"access_control"="is_granted('ROLE_ADMIN')"},
  *       },
  *      itemOperations={
  *          "get"={}
@@ -38,7 +39,7 @@ class Product
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ ne doit pas être vide")
      * @Assert\Length(min="2", minMessage="Ce champ doit contenir un minimum de {{ limit }} caractères")
-     * @Groups({"product_read", "product_details_read"}) 
+     * @Groups({"product_read", "product_details_read", "product_write"}) 
      */
     private $brand;
 
@@ -46,13 +47,13 @@ class Product
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Le champ ne doit pas être vide")
      * @Assert\Length(min="5", minMessage="Ce champ doit contenir un minimum de {{ limit }} caractères")
-     * @Groups({"product_read", "product_details_read"}) 
+     * @Groups({"product_read", "product_details_read", "product_write"}) 
      */
     private $description;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"product_read", "product_details_read"}) 
+     * @Groups({"product_read", "product_details_read", "product_write"}) 
      */
     private $price;
 

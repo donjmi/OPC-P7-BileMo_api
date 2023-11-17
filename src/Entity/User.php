@@ -26,13 +26,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *          "swagger_definition_name"="input"
  *     },
  *     collectionOperations={
- *          "get"={},
+ *          "get"={"access_control"="object.owner == user"},
  *          "post"={},
  *     },
  *      itemOperations={
- *          "get"={},
- *          "put"={},
- *          "delete"={},
+ *          "get"={"access_control"="object.owner == user"},
+ *          "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
+ *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
  *      }
  * )
  */

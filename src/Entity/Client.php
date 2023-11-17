@@ -22,12 +22,12 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *     denormalizationContext={"groups"={"client_write"}},
  *     collectionOperations={
  *          "get"={},
- *          "post"={},
+ *          "post"={"access_control"="is_granted('ROLE_ADMIN')"},
  *       },
  *      itemOperations={
  *          "get"={},
- *          "put"={},
- *          "delete"={},
+ *          "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
+ *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
  *      }    
  * )
  * @ApiFilter(SearchFilter::class, properties={"name": "partial"})
