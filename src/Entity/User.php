@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -19,11 +20,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  * 
  * @ApiResource(
  *     normalizationContext={"groups"={"user_read", "user_details_read"}},
- *     denormalizationContext={"groups"={"user_write"}},
+ *     denormalizationContext={
+ *          "groups"={"user_write"},
+ *          "force_eager"=false,
+ *          "swagger_definition_name"="input"
+ *     },
  *     collectionOperations={
  *          "get"={},
  *          "post"={},
- *       },
+ *     },
  *      itemOperations={
  *          "get"={},
  *          "put"={},
@@ -54,7 +59,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user_write"})
+     * @Groups({"user_write", "user_details_read"})
      */
     private $password;
 
@@ -63,6 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user_details_read", "user_write"})
      */
     private $client;
+    
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
 
     public function getId(): ?int
     {
