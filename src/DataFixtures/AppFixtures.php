@@ -68,15 +68,17 @@ class AppFixtures extends Fixture
                         'admin'
                     )
                 );
-            } else {
-                $user->setRoles(['ROLE_USER']);
-                $user->setClient($clients);
-                $user->setPassword(
-                    $this->passwordEncoder->hashPassword(
-                        $user,
-                        '123456'
-                    )
-                );
+            }  
+            elseif ($u === 2) {
+                $user->setEmail("bilemo@bilemo.fr")
+                    ->setRoles(['ROLE_ADMIN'])
+                    ->setClient($clients)
+                    ->setPassword($this->passwordEncoder->hashPassword($user, 'admin'));
+            }
+            else {
+                $user->setRoles(['ROLE_USER'])
+                    ->setClient($clients)
+                    ->setPassword($this->passwordEncoder->hashPassword($user, '123456'));
             }
 
             $manager->persist($user);
