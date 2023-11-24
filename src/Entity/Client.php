@@ -28,7 +28,14 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *          "get"={},
  *          "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
  *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
- *      }    
+ *      },
+ *      subresourceOperations={
+ *        "users_get_subresource"={
+ *          "openapi_context"={
+ *            "summary"="users client list "
+ *          }
+ *        }
+ *      },  
  * )
  * @ApiFilter(SearchFilter::class, properties={"name": "partial"})
  * @ApiFilter(ExistsFilter::class, properties={"users"})
