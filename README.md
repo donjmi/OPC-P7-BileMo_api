@@ -8,7 +8,7 @@ Créez un web service exposant une API
 
 **Configuration:**
 
-- Symfony 5.3 (framework MVC libre écrit en PHP)
+- Symfony 5.4.3 (framework MVC libre écrit en PHP)
 - PHP 7.4.3
 - Bundle ApiPlatform
 
