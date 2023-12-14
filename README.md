@@ -21,7 +21,7 @@ Créez un web service exposant une API
 
 3. Composer install -> pour installer toutes les dependances.
 
-4. Lancer la commande pour installer/configurer/naviguer sur le projet :
+4. Modifier fichier env. pour préparer la bdd et Lancer la commande pour installer/configurer/naviguer sur le projet :
    **composer prepare**
 ces commandes vont être lancés pour configurer le site:
 
@@ -35,7 +35,9 @@ ces commandes vont être lancés pour configurer le site:
 
  ou avec open ssl
     $ mkdir -p config/jwt
+
     $ openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+    
     $ openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
 
     vérifier les paramétre dans votre fichier .env :
