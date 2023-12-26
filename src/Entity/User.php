@@ -26,14 +26,15 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
  *          "swagger_definition_name"="input"
  *     },
  *     collectionOperations={
- *          "get"={"access_control"="object.owner == user"},
+ *          "get"={},
  *          "post"={},
  *     },
  *      itemOperations={
  *          "get"={"access_control"="object.owner == user"},
  *          "put"={"access_control"="is_granted('ROLE_USER') and object.owner == user"},
  *          "delete"={"access_control"="is_granted('ROLE_ADMIN')"},
- *      }
+ *      },
+ *     attributes={"pagination_enabled"=false}
  * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -42,11 +43,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user_read", "user_write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="Le champ ne doit pas être vide")
      * @Groups({"user_read", "user_details_read", "user_write","client_details_read"})
      */
     private $email;
@@ -59,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user_write", "user_details_read"})
+     * @Groups({"user_write"})
      */
     private $password;
 
