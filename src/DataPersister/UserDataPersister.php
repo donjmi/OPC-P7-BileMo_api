@@ -6,6 +6,7 @@ use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserDataPersister implements DataPersisterInterface
 {
@@ -41,7 +42,14 @@ class UserDataPersister implements DataPersisterInterface
 
     public function remove($data)
     {
-        $this->entityManager->remove($data);
+        // Vérification d'existence de l'utilisateur
+        $user = $this->entityManager->getRepository(User::class)->find($data->getId());
+
+        if (!$user) {
+            throw new NotFoundHttpException('Utilisateur non trouvé avec l\'ID ' . $data->getId());
+        }
+
+        $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
 }
