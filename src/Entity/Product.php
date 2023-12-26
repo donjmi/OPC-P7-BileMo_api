@@ -16,12 +16,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     normalizationContext={"groups"={"product_read", "product_details_read"}},
  *     denormalizationContext={"groups"={"product_write"}},
  *     collectionOperations={
- *          "get"={},
- *          "post"={"access_control"="is_granted('ROLE_ADMIN')"},
- *       },
- *      itemOperations={
- *          "get"={}
- *      }    
+ *         "get"={
+ *             "pagination_enabled"=true,
+ *             "pagination_items_per_page"=1
+ *         },
+ *         "post"={"access_control"="is_granted('ROLE_ADMIN')"},
+ *     },
+ *     itemOperations={
+ *         "get"={}
+ *     },
+ *     attributes={"pagination_enabled"=true}
  * )
  * @ApiFilter(SearchFilter::class, properties={"brand": "partial"})
  */

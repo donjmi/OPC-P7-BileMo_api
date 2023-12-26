@@ -9,5 +9,5 @@ api_platform:
             JWT:
                 name: Authorization
                 type: header
-    defaults:
-        pagination_items_per_page: 5
+    # defaults:
+    #     pagination_items_per_page: 5
